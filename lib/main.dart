@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:toyproject/DataSearch.dart';
 import 'package:toyproject/search.dart';
 import 'package:toyproject/database_helper.dart';
-import 'package:toyproject/settingScreen.dart';
 
 import 'detail.dart';
 
-void main() async{
-  // 환경변수 로드
-  await dotenv.load();
+void main() {
+
   runApp(MyApp());
 } // MyApp() 실행
 
@@ -91,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: [
-            IconButton(
+            /*IconButton(
             icon: Icon(Icons.settings), // 설정 버튼 아이콘
             onPressed: () {
               Navigator.push(
@@ -101,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
               );
             },
-          ), 
+          ), */
           IconButton(   // 상단 검색 버튼
             icon: Icon(Icons.search),
             onPressed: () {

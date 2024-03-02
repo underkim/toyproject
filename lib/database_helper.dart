@@ -6,7 +6,7 @@ class DatabaseHelper {
 
   Future<void> open() async {
     final databasePath = await getDatabasesPath();
-    final String path = join(databasePath, 'test4.db');
+    final String path = join(databasePath, 'cattle.db');
 
     // 데이터베이스 열기
     _db = await openDatabase(
