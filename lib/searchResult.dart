@@ -19,7 +19,7 @@ class SearchResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('파싱된 데이터'),
+        title: Text('이력번호 검색결과'),
         actions: [
           IconButton(
             icon: Icon(Icons.save),
