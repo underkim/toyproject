@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(databaseHelper: _db), //
     );
   }
@@ -88,17 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         actions: [
-            /*IconButton(
-            icon: Icon(Icons.settings), // 설정 버튼 아이콘
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingsPage(),
-                  ),
-              );
-            },
-          ), */
           IconButton(   // 상단 검색 버튼
             icon: Icon(Icons.search),
             onPressed: () {
