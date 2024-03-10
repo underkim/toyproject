@@ -55,6 +55,44 @@ class _DetailInfoPageState extends State<DetailInfoPage> {
           return Scaffold(
             appBar: AppBar(
               title: Text('상세 정보'),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () async {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('정보 삭제'),
+                          content: Text('정말로 모든 정보를 삭제하시겠습니까?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context); // 다이얼로그 닫기
+                              },
+                              child: Text('취소'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () async {
+                                // 데이터베이스에서 cattleNo에 해당하는 모든 정보 삭제
+                                await _databaseHelper
+                                    .deleteAllInfo(widget.cattleNo);
+                                Navigator.pop(context); // 다이얼로그 닫기
+                                Navigator.pop(context); // 이전 화면으로 돌아가기
+                                setState(() {
+                                  // 화면 업데이트
+                                  _futureData = _fetchData();
+                                });
+                              },
+                              child: Text('삭제'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),

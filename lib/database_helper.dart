@@ -191,7 +191,6 @@ class DatabaseHelper {
       WHERE basic_info.cattleNo LIKE '%$searchText%' OR basic_info.nickName LIKE '%$searchText%' OR basic_info.birthdate LIKE '%$searchText%' OR basic_info.type LIKE '%$searchText%' OR basic_info.gender LIKE '%$searchText%' OR detail_info.additionalInfo LIKE '%$searchText%'
       """,
       );
-     
 
       return result;
     } catch (e) {
@@ -209,5 +208,30 @@ class DatabaseHelper {
     );
 
     return result.isNotEmpty; // 결과가 비어있지 않다면, 데이터가 존재한다는 의미
+  }
+
+  Future<void> deleteAllInfo(String cattleNo) async {
+    try {
+      await open();
+      // 데이터베이스 연결
+      await _db.transaction((txn) async {
+        // cattleNo와 관련된 상세 정보 삭제
+        await txn.delete(
+          'detail_info', // detail_info 테이블에서 삭제
+          where: 'cattleNo = ?', // cattleNo에 해당하는 행을 삭제합니다.
+          whereArgs: [cattleNo], // 삭제할 cattleNo의 값
+        );
+        // cattleNo와 관련된 기본 정보 삭제
+        await txn.delete(
+          'basic_info', // basic_info 테이블에서 삭제
+          where: 'cattleNo = ?', // cattleNo에 해당하는 행을 삭제합니다.
+          whereArgs: [cattleNo], // 삭제할 cattleNo의 값
+        );
+      });
+      print('Deleted all info for cattleNo: $cattleNo');
+    } catch (e) {
+      print('Error deleting all info: $e');
+      throw Exception('Error deleting all info');
+    }
   }
 }
