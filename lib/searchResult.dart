@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toyproject/database_helper.dart';
 
-
 class SearchResult extends StatelessWidget {
   final String? cattleNo;
   final String? birthdate;
@@ -50,15 +49,26 @@ class SearchResult extends StatelessWidget {
     final dbHelper = DatabaseHelper();
     await dbHelper.open();
 
-    // 파싱된 데이터 저장
-    await dbHelper.addBasicInfo(cattleNo!, birthdate!, type!, gender!);
+    bool exists = await dbHelper.isExist(cattleNo!);
 
-    // 저장 완료 메시지 표시
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('데이터 저장 완료'),
-      ),
-    );
+    if (!exists) {
+      // 파싱된 데이터 저장
+      await dbHelper.addBasicInfo(cattleNo!, birthdate!, type!, gender!);
+
+      // 저장 완료 메시지 표시
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('데이터 저장 완료'),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('이미 데이터가 존재합니다'),
+        ),
+      );
+    }
+
     Navigator.pop(context);
   }
 }
