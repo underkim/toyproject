@@ -191,11 +191,23 @@ class DatabaseHelper {
       WHERE basic_info.cattleNo LIKE '%$searchText%' OR basic_info.nickName LIKE '%$searchText%' OR basic_info.birthdate LIKE '%$searchText%' OR basic_info.type LIKE '%$searchText%' OR basic_info.gender LIKE '%$searchText%' OR detail_info.additionalInfo LIKE '%$searchText%'
       """,
       );
+     
 
       return result;
     } catch (e) {
       print('Error searching cattle info: $e');
       return [];
     }
+  }
+
+  Future<bool> isExist(String cattleNo) async {
+    await open();
+    final result = await _db.query(
+      'basic_info', // 데이터를 확인할 테이블 이름
+      where: 'cattleNo = ?', // 조건
+      whereArgs: [cattleNo], // 조건에 대입될 값
+    );
+
+    return result.isNotEmpty; // 결과가 비어있지 않다면, 데이터가 존재한다는 의미
   }
 }

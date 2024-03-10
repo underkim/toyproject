@@ -75,10 +75,19 @@ class DataSearch extends SearchDelegate<String> {
             final nickName = basicInfo['nickName'];
             final birthdate = basicInfo['birthdate'];
 
+            final additionValue =
+                searchResults.where((info) => info['cattleNo'] == cattleNo);
             // 해당 기본 정보에 대한 모든 추가 정보를 가져옵니다.
-            final additionalInfoList = searchResults
-                .where((info) => info['cattleNo'] == cattleNo)
-                .toList();
+            final additionalInfoList = additionValue.map((info) {
+              // 'additionalInfo'가 null이면 기본값으로 설정합니다.
+              final additionalInfo = info['additionalInfo'] != null
+                  ? info['additionalInfo']
+                  : '기본정보';
+              // 기본값으로 대체된 추가 정보를 포함한 맵 생성
+              final updatedInfo = Map<String, dynamic>.from(info);
+              updatedInfo['additionalInfo'] = additionalInfo;
+              return updatedInfo;
+            }).toList();
 
             return ExpansionTile(
               title: Text(cattleNo),
